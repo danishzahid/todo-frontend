@@ -1,0 +1,36 @@
+/* Header.module.css */
+.header {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure the header is above other elements */
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoIcon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.logoText {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .logoContainer {
+    flex-direction: column;
+  }
+
+  .logoIcon {
+    margin-bottom: 5px;
+  }
+}

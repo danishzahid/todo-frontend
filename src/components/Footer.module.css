@@ -1,0 +1,20 @@
+/* Footer.module.css */
+.footer {
+  background-color: #3498db;
+  color: #fff;
+  text-align: center;
+  padding: 2px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.heartIcon {
+  color: whitesmoke; /* Blue color for the heart icon */
+  margin: 0 5px;
+}
+
+/* Brighten the text color */
+.footer p {
+  color: #ecf0f1; /* Lighter shade of white/gray */
+}
