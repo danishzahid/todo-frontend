@@ -15,7 +15,12 @@ function App() {
         position="top-right"
         toastOptions={{
           style: {
-            fontSize: "1.8rem",
+            fontSize: "1.2rem",
+            background: "#fff", // Set background to white
+            color: "#3498db", // Set text color to the border color
+            borderRadius: "2px", // Adjust the border radius
+            border: "2px solid #3498db", // Set the border style and color
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Adjust the box shadow
           },
         }}
       />
