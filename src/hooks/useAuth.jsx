@@ -7,7 +7,7 @@ export default () => {
   const verifyAuth = async () => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_APIURL}/api/auth/login`
+        `${process.env.REACT_APP_APIURL}/api/auth/isLoggedIn`
       );
       console.log(res.data, "isLoggedIn called");
       return res.data;
