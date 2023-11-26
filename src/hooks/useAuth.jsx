@@ -6,7 +6,10 @@ export default () => {
 
   const verifyAuth = async () => {
     try {
-      const response = await axiosInstance.get("/api/auth/isLoggedIn");
+      const response = await axios.get(
+        "https://todo-backend-rdhq.onrender.com/api/auth/isLoggedIn",
+        { withCredentials: true }
+      );
 
       console.log(res.data, "isLoggedIn called");
       return res.data;

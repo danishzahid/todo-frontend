@@ -21,7 +21,13 @@ const Auth = () => {
 
   const signup = async (userData) => {
     try {
-      const response = await axiosInstance.post("/api/auth/signup", userData);
+      const response = await axios.post(
+        "https://todo-backend-rdhq.onrender.com/api/auth/signup",
+        userData,
+        {
+          withCredentials: true, // Include credentials (cookies) in the request
+        }
+      );
       console.log("Signup success:", response.data);
       toast.success("Signup successful");
       navigate("/", { replace: true });
@@ -33,7 +39,13 @@ const Auth = () => {
 
   const login = async (userData) => {
     try {
-      const response = await axiosInstance.post("/api/auth/login", userData);
+      const response = await axios.post(
+        "https://todo-backend-rdhq.onrender.com/api/auth/login",
+        userData,
+        {
+          withCredentials: true, // Include credentials (cookies) in the request
+        }
+      );
 
       console.log("Login success:", response.data);
       toast.success("Login successful");
