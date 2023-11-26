@@ -14,7 +14,7 @@ export default () => {
       console.log(res.data, "isLoggedIn called");
       return res.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return false;
     }
   };
