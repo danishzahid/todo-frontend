@@ -82,7 +82,7 @@ const Auth = () => {
             {!isLogin && (
               <div className={styles.inputGroup}>
                 <FaUser className={styles.icon} />
-                <label htmlFor="name"></label>
+                {/* <label htmlFor="name"></label> */}
                 <input
                   type="text"
                   name="name"
@@ -93,12 +93,12 @@ const Auth = () => {
             )}
             <div className={styles.inputGroup}>
               <FaEnvelope className={styles.icon} />
-              <label htmlFor="email"></label>
+              {/* <label htmlFor="email"></label> */}
               <input type="email" name="email" placeholder="Email" required />
             </div>
             <div className={styles.inputGroup}>
               <FaLock className={styles.icon} />
-              <label htmlFor="password"></label>
+              {/* <label htmlFor="password"></label> */}
               <input
                 type="password"
                 name="password"
