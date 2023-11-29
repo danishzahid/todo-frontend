@@ -35,7 +35,7 @@ function Home() {
 
   const addTask = async () => {
     try {
-      await axios.post("https://todo-backend-rdhq.onrender.com/api/tasks", {
+      await axios.post("https://todo-backend-rdhq.onrender.com/api/tasks/", {
         title: newTask, // Use 'title' instead of 'description'
       });
       setNewTask("");
