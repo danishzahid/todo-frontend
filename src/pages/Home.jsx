@@ -2,71 +2,126 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Profile from "../components/Profile";
-
 import axios from "axios";
-
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
-import styles from "./Home.module.css"; // Import the CSS module
+import { toast } from "react-hot-toast";
+import styles from "./Home.module.css";
 
 function Home() {
-  // const addTask = () => {};
-  // const deleteTask = () => {};
-  // const updateTask = () => {};
-
-  // const tasks = ["asn", "sSD", "adsf"];
-  const [tasks, setTasks] = useState([]);
+  const [allTasks, setAllTasks] = useState([]);
+  const [myTasks, setMyTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [showAllTasks, setShowAllTasks] = useState(true);
 
   useEffect(() => {
-    // Fetch tasks when the component mounts
-    fetchTasks();
+    fetchAllTasks();
+    fetchUserTasks();
   }, []);
 
-  const fetchTasks = async () => {
+  const fetchAllTasks = async () => {
     try {
       const response = await axios.get(
-        "https://todo-backend-rdhq.onrender.com/api/tasks/all"
+        `${process.env.REACT_APP_APIURL}/api/tasks/all`,
+        { withCredentials: true }
       );
-      setTasks(response.data);
+      setAllTasks(response.data);
+      console.log("all", response.data);
     } catch (error) {
-      console.error("Error fetching tasks:", error.message);
+      console.error("Error fetching all tasks:", error.message);
+    }
+  };
+
+  const fetchUserTasks = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_APIURL}/api/tasks/myTasks`,
+        { withCredentials: true }
+      );
+      setMyTasks(response.data);
+      console.log("my", response.data);
+    } catch (error) {
+      console.error("Error fetching user tasks:", error.message);
     }
   };
 
   const addTask = async () => {
     try {
-      await axios.post("https://todo-backend-rdhq.onrender.com/api/tasks/", {
-        title: newTask, // Use 'title' instead of 'description'
-      });
+      await axios.post(
+        `${process.env.REACT_APP_APIURL}/api/tasks`,
+        { title: newTask },
+        { withCredentials: true }
+      );
       setNewTask("");
-      fetchTasks();
+      toast.success("Task added successfully!");
+      fetchAllTasks();
+      fetchUserTasks();
     } catch (error) {
       console.error("Error adding task:", error.message);
+      toast.error("Failed to add task. Please try again.");
     }
   };
 
   const deleteTask = async (taskId) => {
     try {
       await axios.delete(
-        `https://todo-backend-rdhq.onrender.com/api/tasks/${taskId}`
+        `${process.env.REACT_APP_APIURL}/api/tasks/${taskId}`,
+        { withCredentials: true }
       );
-      fetchTasks();
+      toast.success("Task deleted successfully!");
+      fetchAllTasks();
+      fetchUserTasks();
     } catch (error) {
       console.error("Error deleting task:", error.message);
+      toast.error("Failed to delete task. Please try again.");
     }
   };
 
-  const updateTask = async (taskId, title) => {
+  // const updateTask = async (taskId, title) => {
+  //   try {
+  //     await axios.put(
+  //       `${process.env.REACT_APP_APIURL}/api/tasks/${taskId}`,
+  //       { title },
+  //       { withCredentials: true }
+  //     );
+  //     toast.success("Task updated successfully!");
+  //     fetchAllTasks();
+  //     fetchUserTasks();
+  //   } catch (error) {
+  //     console.error("Error updating task:", error.message);
+  //     toast.error("Failed to update task. Please try again.");
+  //   }
+  // };
+
+  const updateTask = async (taskId, title, completed) => {
     try {
+      // Make a PUT request to update task status
       await axios.put(
-        `https://todo-backend-rdhq.onrender.com/api/tasks/${taskId}`,
-        { title } // Use 'title' instead of 'description'
+        `${process.env.REACT_APP_APIURL}/api/tasks/${taskId}`,
+        {
+          title,
+          completed, // Toggle the completed status
+        },
+        { withCredentials: true }
       );
-      fetchTasks();
+
+      // Display success toaster
+      toast.success("Task updated successfully!");
+
+      // Fetch updated tasks
+      fetchAllTasks();
     } catch (error) {
       console.error("Error updating task:", error.message);
+
+      // Display error toaster
+      toast.error("Failed to update task. Please try again.");
     }
   };
+
+  const toggleTasks = () => {
+    setShowAllTasks((prev) => !prev);
+  };
+
+  const tasksToShow = showAllTasks ? allTasks : myTasks;
 
   return (
     <>
@@ -74,6 +129,11 @@ function Home() {
       <Profile />
       <div className={styles.tasksContainer}>
         <h1>Task Manager</h1>
+        <div className={styles.toggleButton}>
+          <button onClick={toggleTasks}>
+            {showAllTasks ? "My Tasks" : "All Tasks"}
+          </button>
+        </div>
         <div className={styles.taskInputContainer}>
           <input
             type="text"
@@ -86,17 +146,21 @@ function Home() {
           </button>
         </div>
         <ul className={styles.taskList}>
-          {tasks.map((task) => (
+          {tasksToShow.map((task) => (
             <li key={task._id}>
-              <span>{task.title}</span>{" "}
-              {/* Use 'title' instead of 'description' */}
+              <span>{task.title}</span>
               <div>
+                <input
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => {
+                    const newStatus = !task.completed;
+                    updateTask(task._id, task.title, newStatus);
+                  }}
+                />
                 <button
                   onClick={() =>
-                    updateTask(
-                      task._id,
-                      prompt("Update task:", task.title) // Use 'title' instead of 'description'
-                    )
+                    updateTask(task._id, prompt("Update task:", task.title))
                   }
                 >
                   <FaEdit />
@@ -109,7 +173,6 @@ function Home() {
           ))}
         </ul>
       </div>
-
       <Footer />
     </>
   );

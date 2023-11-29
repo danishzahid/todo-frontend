@@ -7,7 +7,7 @@ export default () => {
   const verifyAuth = async () => {
     try {
       const res = await axios.get(
-        "https://todo-backend-rdhq.onrender.com/api/auth/isLoggedIn",
+        `${process.env.REACT_APP_APIURL}/api/auth/isLoggedIn`,
         { withCredentials: true }
       );
 

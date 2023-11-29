@@ -1,41 +1,52 @@
-// import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
-// function EditProfile() {
-//   return (
-//     <>
-//       <Header />
-//       <Footer />
-//     </>
-//   );
-// }
-
-// export default EditProfile;
-// EditProfile.js
-
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import styles from "./EditProfile.module.css";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import UserContext from "../contexts/UserContext";
 
 const EditProfile = () => {
-  const [user, setUser] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
-  });
+  const { user } = useContext(UserContext);
+  const [newUser, setNewUser] = useState(user || {}); //replace this user with actual
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
+    setNewUser((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to submit changes (e.g., API call)
-    console.log("Profile updated:", user);
+
+    try {
+      // Make a PUT request to update user profile
+      await axios.put(
+        `${process.env.REACT_APP_APIURL}/api/users/me`,
+        {
+          name: newUser.name,
+          email: newUser.email,
+        },
+        { withCredentials: true }
+      );
+
+      // Display success toaster
+      toast.success("Profile updated successfully!");
+
+      // Navigate to the home page after successful update
+      navigate("/");
+    } catch (error) {
+      console.error("Error updating profile:", error.message);
+
+      // Display error toaster
+      toast.error("Failed to update profile. Please try again.");
+    }
   };
 
   return (
@@ -50,7 +61,7 @@ const EditProfile = () => {
               type="text"
               id="name"
               name="name"
-              value={user.name}
+              value={newUser.name}
               onChange={handleChange}
             />
             <FaEdit className={styles.editIcon} />
@@ -61,7 +72,7 @@ const EditProfile = () => {
               type="email"
               id="email"
               name="email"
-              value={user.email}
+              value={newUser.email}
               onChange={handleChange}
             />
             <FaEdit className={styles.editIcon} />

@@ -22,7 +22,7 @@ const Auth = () => {
   const signup = async (userData) => {
     try {
       const response = await axios.post(
-        "https://todo-backend-rdhq.onrender.com/api/auth/signup",
+        `${process.env.REACT_APP_APIURL}/api/auth/signup`,
         userData,
         {
           withCredentials: true, // Include credentials (cookies) in the request
@@ -40,7 +40,7 @@ const Auth = () => {
   const login = async (userData) => {
     try {
       const response = await axios.post(
-        "https://todo-backend-rdhq.onrender.com/api/auth/login",
+        `${process.env.REACT_APP_APIURL}/api/auth/login`,
         userData,
         {
           withCredentials: true, // Include credentials (cookies) in the request

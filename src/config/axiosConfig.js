@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://todo-backend-rdhq.onrender.com",
+  baseURL: process.env.REACT_APP_APIURL,
   withCredentials: true,
 });
 

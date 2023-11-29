@@ -7,8 +7,11 @@ import Home from "./pages/Home";
 import EditProfile from "./pages/EditProfile";
 import Auth from "./pages/Auth";
 import PrivateRoutes from "./components/PrivateRoutes";
+import useUserData from "./hooks/useUserData";
+import UserContext from "./contexts/UserContext";
 
 function App() {
+  const { user } = useUserData();
   return (
     <div className="App">
       <Toaster
@@ -24,13 +27,15 @@ function App() {
           },
         }}
       />
-      <Routes>
-        <Route element={<PrivateRoutes />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-        </Route>
-        <Route path="/auth" element={<Auth />} />
-      </Routes>
+      <UserContext.Provider value={{ user }}>
+        <Routes>
+          <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
+          </Route>
+          <Route path="/auth" element={<Auth />} />
+        </Routes>
+      </UserContext.Provider>
     </div>
   );
 }
