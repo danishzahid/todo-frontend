@@ -1,0 +1,53 @@
+/* Tasks.module.css */
+
+.tasksContainer {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.taskInputContainer {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.taskInputContainer input {
+  flex: 1;
+  padding: 8px;
+}
+
+.taskInputContainer button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.taskList {
+  list-style: none;
+  padding: 0;
+}
+
+.taskList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.taskList li span {
+  flex: 1;
+}
+
+.taskList li div {
+  display: flex;
+}
+
+.taskList li button {
+  background-color: #f44336;
+  color: #fff;
+  margin-left: 5px;
+  border: none;
+  cursor: pointer;
+}

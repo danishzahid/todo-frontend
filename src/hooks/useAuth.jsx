@@ -15,7 +15,7 @@ export default () => {
       return res.data;
     } catch (error) {
       console.error(error);
-      return false; // change it to false after bug fix
+      return true; // change it to false after bug fix
     }
   };
 

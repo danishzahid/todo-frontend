@@ -1,0 +1,42 @@
+/* EditProfile.module.css */
+
+.editProfileContainer {
+  max-width: 400px;
+  margin: auto;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-right: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.editIcon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .inputGroup {
+    flex-direction: column;
+  }
+}
