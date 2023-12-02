@@ -6,6 +6,7 @@ import axios from "axios";
 import { FaPlus, FaTrash, FaEdit } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import styles from "./Home.module.css";
+import NoTask from "../components/NoTask";
 
 function Home() {
   const [allTasks, setAllTasks] = useState([]);
@@ -145,33 +146,37 @@ function Home() {
             <FaPlus />
           </button>
         </div>
-        <ul className={styles.taskList}>
-          {tasksToShow.map((task) => (
-            <li key={task._id}>
-              <span>{task.title}</span>
-              <div>
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => {
-                    const newStatus = !task.completed;
-                    updateTask(task._id, task.title, newStatus);
-                  }}
-                />
-                <button
-                  onClick={() =>
-                    updateTask(task._id, prompt("Update task:", task.title))
-                  }
-                >
-                  <FaEdit />
-                </button>
-                <button onClick={() => deleteTask(task._id)}>
-                  <FaTrash />
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {tasksToShow.length === 0 ? (
+          <NoTask />
+        ) : (
+          <ul className={styles.taskList}>
+            {tasksToShow.map((task) => (
+              <li key={task._id}>
+                <span>{task.title}</span>
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={task.completed}
+                    onChange={() => {
+                      const newStatus = !task.completed;
+                      updateTask(task._id, task.title, newStatus);
+                    }}
+                  />
+                  <button
+                    onClick={() =>
+                      updateTask(task._id, prompt("Update task:", task.title))
+                    }
+                  >
+                    <FaEdit />
+                  </button>
+                  <button onClick={() => deleteTask(task._id)}>
+                    <FaTrash />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <Footer />
     </>
