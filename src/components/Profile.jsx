@@ -12,7 +12,8 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
-  const [newUser, setNewUser] = useState(user || {});
+  const [newUser, setNewUser] = useState({});
+  setNewUser(user);
 
   // useEffect(() => {
   //   const fetchUser = async () => {
